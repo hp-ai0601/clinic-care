@@ -1,0 +1,12 @@
+{
+  "name": "clinic-care",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "nuxt": "^3.13.2"
+  }
+}
