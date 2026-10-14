@@ -5,6 +5,7 @@
       type="text"
       placeholder="Type a code or description, e.g. E11 or hypertension"
       @focus="open = true"
+      @blur="open = false"
       @keydown.esc="open = false"
     />
     <div v-if="open && results.length" class="picker-list">

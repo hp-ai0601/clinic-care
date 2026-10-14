@@ -8,6 +8,7 @@
           <th>Patient</th>
           <th>Diagnosis</th>
           <th>Notes</th>
+          <th>Doctor</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,7 @@
             </span>
           </td>
           <td class="notes-preview">{{ row.notes }}</td>
+          <td class="muted">{{ row.doctor_name || "—" }}</td>
         </tr>
       </tbody>
     </table>

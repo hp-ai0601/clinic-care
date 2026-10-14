@@ -56,7 +56,24 @@ a:hover { text-decoration: underline; }
 }
 .nav a:hover { background: rgba(255,255,255,.08); color: #fff; text-decoration: none; }
 .nav a.router-link-active { background: rgba(255,255,255,.14); color: #fff; }
-.topbar-right { margin-left: auto; font-size: 13px; color: rgba(255,255,255,.7); }
+.topbar-right {
+  margin-left: auto;
+  font-size: 13px;
+  color: rgba(255,255,255,.7);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.linkish {
+  background: none;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 24px 48px; }
 
@@ -208,3 +225,15 @@ tr:last-child td { border-bottom: 0; }
 .muted { color: var(--muted); font-size: 13px; }
 .form-card { padding: 22px; max-width: 720px; }
 .actions { display: flex; gap: 10px; margin-top: 8px; }
+
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.login-card { width: 100%; max-width: 380px; padding: 28px; }
+.login-card h1 { font-size: 22px; margin-bottom: 6px; }
+.login-card > p { color: var(--muted); margin-bottom: 20px; font-size: 14px; }
+.demo { margin-top: 16px; color: var(--muted); font-size: 13px; }
