@@ -3,8 +3,9 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models import Diagnosis
+from app.models import Diagnosis, Doctor
 from app.schemas import DiagnosisOut
+from app.security import get_current_doctor
 
 router = APIRouter(tags=["diagnosis"])
 
@@ -13,6 +14,7 @@ router = APIRouter(tags=["diagnosis"])
 def search_diagnosis(
     search: str = Query("", max_length=80),
     db: Session = Depends(get_db),
+    _: Doctor = Depends(get_current_doctor),
 ):
     q = db.query(Diagnosis).order_by(Diagnosis.code)
     term = search.strip()

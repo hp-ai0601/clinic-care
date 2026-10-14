@@ -2,8 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session, joinedload
 
 from app.database import get_db
-from app.models import Consultation, Diagnosis
+from app.models import Consultation, Diagnosis, Doctor
 from app.schemas import ConsultationCreate, ConsultationOut
+from app.security import get_current_doctor
 
 router = APIRouter(tags=["consultation"])
 
@@ -20,7 +21,11 @@ def _to_out(row: Consultation) -> ConsultationOut:
 
 
 @router.post("/consultation", response_model=ConsultationOut, status_code=status.HTTP_201_CREATED)
-def create_consultation(payload: ConsultationCreate, db: Session = Depends(get_db)):
+def create_consultation(
+    payload: ConsultationCreate,
+    db: Session = Depends(get_db),
+    doctor: Doctor = Depends(get_current_doctor),
+):
     diagnoses = (
         db.query(Diagnosis)
         .filter(Diagnosis.code.in_(payload.diagnosis_codes))
@@ -37,6 +42,7 @@ def create_consultation(payload: ConsultationCreate, db: Session = Depends(get_d
     row = Consultation(
         patient_name=payload.patient_name,
         notes=payload.notes,
+        doctor_id=doctor.id,
         diagnoses=diagnoses,
     )
     db.add(row)
@@ -50,6 +56,7 @@ def list_consultations(
     patient: str = Query("", max_length=120),
     diagnosis: str = Query("", max_length=80),
     db: Session = Depends(get_db),
+    _: Doctor = Depends(get_current_doctor),
 ):
     q = (
         db.query(Consultation)
