@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import APP_NAME, APP_VERSION
 from app.database import Base, SessionLocal, engine
 from app import models  # noqa: F401
+from app.routers import diagnosis
 from app.seed import seed_diagnoses
 
 app = FastAPI(title=APP_NAME, version=APP_VERSION)
@@ -25,6 +26,9 @@ def startup():
         seed_diagnoses(db)
     finally:
         db.close()
+
+
+app.include_router(diagnosis.router)
 
 
 @app.get("/health")
