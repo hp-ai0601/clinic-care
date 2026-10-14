@@ -8,11 +8,11 @@
     </div>
 
     <form class="card search-bar" @submit.prevent="run">
-      <div class="form-row" style="margin:0">
+      <div class="form-row">
         <label>Patient</label>
         <input v-model="patient" type="text" placeholder="e.g. Nguyen" />
       </div>
-      <div class="form-row" style="margin:0">
+      <div class="form-row">
         <label>Diagnosis</label>
         <input v-model="diagnosis" type="text" placeholder="e.g. E11 or diabetes" />
       </div>

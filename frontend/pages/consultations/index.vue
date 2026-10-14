@@ -15,5 +15,6 @@
 
 <script setup>
 const { get } = useApi()
-const { data: rows, pending, error } = await useAsyncData("consultations", () => get("/consultation"))
+const { data: rows, pending, error, refresh } = await useAsyncData("consultations", () => get("/consultation"))
+onMounted(() => refresh())
 </script>

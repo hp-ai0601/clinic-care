@@ -4,8 +4,7 @@
       v-model="term"
       type="text"
       placeholder="Type a code or description, e.g. E11 or hypertension"
-      @focus="open = true"
-      @blur="open = false"
+      @focus="onFocus"
       @keydown.esc="open = false"
     />
     <div v-if="open && results.length" class="picker-list">
@@ -47,9 +46,24 @@ watch(term, (value) => {
 })
 
 async function lookup(value) {
+  const q = value.trim()
+  if (!q) {
+    results.value = []
+    open.value = false
+    return
+  }
   const selected = new Set(props.modelValue.map((d) => d.code))
-  const rows = await get("/diagnosis", { search: value.trim() })
-  results.value = rows.filter((d) => !selected.has(d.code))
+  try {
+    const rows = await get("/diagnosis", { search: q })
+    results.value = rows.filter((d) => !selected.has(d.code))
+    open.value = results.value.length > 0
+  } catch {
+    results.value = []
+  }
+}
+
+function onFocus() {
+  if (term.value.trim()) lookup(term.value)
 }
 
 function add(item) {
